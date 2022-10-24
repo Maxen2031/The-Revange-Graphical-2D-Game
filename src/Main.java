@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Main {
     public static int mainSize = 48;
     public static String gameTitle = "THE REVENGE";

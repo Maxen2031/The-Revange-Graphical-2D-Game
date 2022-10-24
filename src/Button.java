@@ -10,9 +10,9 @@ public class Button extends JButton implements ActionListener {
         this.setVisible(true);
     }
 
-    public Button(String buttonType, Dimension dimension) {
+    public Button(String buttonType) {
         this.setButtonType(buttonType);
-        this.setPreferredSize(dimension);
+        this.setFocusable(false);
         this.setVisible(true);
     }
 
