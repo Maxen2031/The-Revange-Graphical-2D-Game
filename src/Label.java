@@ -6,8 +6,12 @@ import java.awt.Font;
 public class Label extends JLabel{
     private static String defaultFont = "Sans";
 
-    public Label(String text, int fontWeight, int fontSize) {
+    public Label() {
+
+    }
+
+    public Label(String text, Font font) {
         super(text);
-        this.setFont(new Font(defaultFont, fontWeight, fontSize));
+        this.setFont(font);
     }
 }

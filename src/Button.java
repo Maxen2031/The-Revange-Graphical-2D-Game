@@ -5,15 +5,19 @@ import java.awt.event.ActionListener;
 
 public class Button extends JButton implements ActionListener {
     private String buttonType;
+    private Screen screen;
 
-    public Button() {
+    public Button(Screen screen) {
         this.setVisible(true);
+        this.screen = screen;
     }
 
-    public Button(String buttonType) {
+    public Button(String buttonType, Screen screen) {
         this.setButtonType(buttonType);
         this.setFocusable(false);
+        this.addActionListener(this);
         this.setVisible(true);
+        this.screen = screen;
     }
 
     public void setButtonType(String buttonType) {
@@ -27,13 +31,14 @@ public class Button extends JButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (!(event.getSource().equals(this))) return;
-
-        if (this.getButtonType() == "playButton") {
+        System.out.println("here");
+        if (this.getButtonType().equals("playButton")) {
+            System.out.println("2");
             this.playAction();
         }
     }
 
     public void playAction() {
-        System.out.println("Play Action");
+        screen.initializeGame();
     }
 }
