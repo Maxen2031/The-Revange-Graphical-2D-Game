@@ -16,7 +16,6 @@ public class Button extends JButton implements ActionListener {
         this.setButtonType(buttonType);
         this.setFocusable(false);
         this.addActionListener(this);
-        this.setVisible(true);
         this.screen = screen;
     }
 

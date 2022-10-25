@@ -1,13 +1,16 @@
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Screen extends JFrame {
-    public static int sizeX = 800;
-    public static int sizeY = 600;
+    public static int sizeX = 960;
+    public static int sizeY = 720;
     public static int titleSize = 1200;
 
     private Panel mainMenuPanel;
@@ -40,14 +43,14 @@ public class Screen extends JFrame {
 
         Panel sidePanelWest = new Panel();
         sidePanelWest.setBackground(Color.black);
-        sidePanelWest.setPreferredSize(new Dimension(200, 100));
+        sidePanelWest.setPreferredSize(new Dimension(300, 100));
         sidePanelWest.setLayout(new BorderLayout());
         this.add(sidePanelWest, BorderLayout.WEST);
         this.mainMenuComponent[2] = sidePanelWest;
 
         Panel sidePanelEast = new Panel();
         sidePanelEast.setBackground(Color.black);
-        sidePanelEast.setPreferredSize(new Dimension(200, 100));
+        sidePanelEast.setPreferredSize(new Dimension(300, 100));
         sidePanelEast.setLayout(new BorderLayout());
         this.add(sidePanelEast, BorderLayout.EAST);
         this.mainMenuComponent[3] = sidePanelEast;
@@ -65,7 +68,12 @@ public class Screen extends JFrame {
 
     public void initializeGame() {
         Panel gamePanel = new Panel();
+        gamePanel.setLayout(null);
+        gamePanel.setBackground(new Color(0x4F9966));
         gamePanel.setVisible(true);
+
+        map = new Map(gamePanel);
+        map.renderMap();
 
         this.add(gamePanel);
     }

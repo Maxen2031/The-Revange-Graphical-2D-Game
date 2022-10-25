@@ -14,7 +14,7 @@ public class Entity extends JPanel{
         position = new Dimension2(x, y);
     }
 
-    public void updateEntity() {
+    public void update() {
 
     }
 }
