@@ -39,6 +39,6 @@ public class Button extends JButton implements ActionListener {
     }
 
     public void playAction() {
-        screen.initializeGame();
+        screen.startGame();
     }
 }
