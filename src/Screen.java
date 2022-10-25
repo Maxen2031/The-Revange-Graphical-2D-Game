@@ -11,6 +11,7 @@ public class Screen extends JFrame {
     public static int titleSize = 1200;
 
     private Panel mainMenuPanel;
+    private Map map;
     private JComponent[] mainMenuComponent;
 
     public Screen() {
@@ -67,12 +68,6 @@ public class Screen extends JFrame {
         gamePanel.setVisible(true);
 
         this.add(gamePanel);
-
-        this.renderMap();
-    }
-
-    public void renderMap() {
-
     }
 
     public void setComponentVisibility(JComponent[] component, boolean visibility) {
