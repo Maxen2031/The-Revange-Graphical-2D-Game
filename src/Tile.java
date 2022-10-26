@@ -2,9 +2,9 @@ import javax.swing.*;
 
 public class Tile {
     private static String[] images = {
-            "GrassTile.png",
-            "WaterTile.gif",
-            "TreeTile.png",
+            "Resources/Tiles/OutdoorTiles/GrassTile.png",
+            "Resources/Tiles/OutdoorTiles/WaterTile.gif",
+            "Resources/Tiles/OutdoorTiles/TreeTile.png",
     };
 
     private JLabel image;

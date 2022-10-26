@@ -9,13 +9,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Screen extends JFrame {
-    public static int sizeX = 960;
+    public static int sizeX = 1018;
     public static int sizeY = 720;
     public static int titleSize = 1200;
 
     private Panel mainMenuPanel;
     private Map map;
     private JComponent[] mainMenuComponent;
+    private Character character;
+    private GameManager gameManager;
 
     public Screen() {
         this.setSize(sizeX, sizeY);
@@ -72,6 +74,9 @@ public class Screen extends JFrame {
         gamePanel.setBackground(new Color(0x4F9966));
         gamePanel.setVisible(true);
 
+        this.character = new Character(gamePanel);
+        character.drawCharacter();
+
         map = new Map(gamePanel);
         map.renderMap();
 
@@ -87,6 +92,9 @@ public class Screen extends JFrame {
     public void startGame() {
         this.setComponentVisibility(this.mainMenuComponent, false);
         this.initializeGame();
+
+        this.gameManager = new GameManager(map);
+        gameManager.initialize();
     }
 
     public Button initializeButton(String text, String type) {

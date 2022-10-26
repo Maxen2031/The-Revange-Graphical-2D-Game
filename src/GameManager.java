@@ -2,26 +2,31 @@ public class GameManager {
     Entity entities[];
     Map gameMap;
 
-    public GameManager() {
+    public GameManager(Map map) {
         entities = new Entity[10];
+        this.gameMap = map;
     }
 
     public void initialize() {
-        try {
-            while (true) {
-                // Update all entities
+        while (true) {
+            // Update all entities
+            System.out.println("run");
+            /*
+            for (Entity entity : entities) {
+                if (entity == null) continue;
+                entity.update();
+            }*/
 
-                for (Entity entity : entities) {
-                    entity.update();
-                }
+            gameMap.renderMap();
 
-
-
+            try {
                 Thread.sleep(1000);
             }
-        }
-        catch(InterruptedException ex) {
-            ex.printStackTrace();
+            catch(InterruptedException ex) {
+                ex.printStackTrace();
+            }
+
+            gameMap.disolveMap();
         }
     }
 
