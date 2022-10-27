@@ -1,15 +1,18 @@
 import javax.swing.*;
 
 public class Character extends Entity{
-    private int x;
-    private int y;
     private JLabel image;
     private Panel gamePanel;
 
     public Character(Panel gamePanel) {
-        this.x = 11;
-        this.y = 8;
+        this.setX(10);
+        this.setY(7);
+        this.image = new JLabel(this.generateImage());
+        this.gamePanel = gamePanel;
+    }
 
+    public Character(int x, int y, Panel gamePanel) {
+        super(x, y);
         this.image = new JLabel(this.generateImage());
         this.gamePanel = gamePanel;
     }

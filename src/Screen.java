@@ -8,7 +8,7 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Screen extends JFrame {
+public class Screen extends JFrame implements Runnable {
     public static int sizeX = 1018;
     public static int sizeY = 720;
     public static int titleSize = 1200;
@@ -18,6 +18,7 @@ public class Screen extends JFrame {
     private JComponent[] mainMenuComponent;
     private Character character;
     private GameManager gameManager;
+    private Thread gameThread;
 
     public Screen() {
         this.setSize(sizeX, sizeY);
@@ -77,7 +78,7 @@ public class Screen extends JFrame {
         this.character = new Character(gamePanel);
         character.drawCharacter();
 
-        map = new Map(gamePanel);
+        map = new Map(gamePanel, character);
         map.renderMap();
 
         this.add(gamePanel);
@@ -93,8 +94,7 @@ public class Screen extends JFrame {
         this.setComponentVisibility(this.mainMenuComponent, false);
         this.initializeGame();
 
-        this.gameManager = new GameManager(map);
-        gameManager.initialize();
+        this.startGameThread();
     }
 
     public Button initializeButton(String text, String type) {
@@ -105,5 +105,16 @@ public class Screen extends JFrame {
         this.mainMenuPanel.add(button);
 
         return button;
+    }
+
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    @Override
+    public void run() {
+        this.gameManager = new GameManager(map);
+        gameManager.initialize();
     }
 }
