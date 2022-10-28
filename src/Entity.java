@@ -3,11 +3,14 @@
 import javax.swing.JPanel;
 
 public class Entity extends JPanel{
+    private static Entity[] entities = new Entity[100];
     private int health;
     private Dimension2 position;
 
     public Entity() {
         position = new Dimension2(0, 0);
+
+        entities[this.getAmountOfEntities()] = this;
     }
 
     public Entity(int x, int y) {
@@ -32,5 +35,25 @@ public class Entity extends JPanel{
 
     public void update() {
 
+    }
+
+    public void draw() {
+
+    }
+
+    public int getAmountOfEntities() {
+        int amount = 0;
+
+        for (Entity entity : this.entities) {
+            if (entity == null) continue;
+
+            amount++;
+        }
+
+        return amount;
+    }
+
+    public static Entity[] getEntities() {
+        return entities;
     }
 }

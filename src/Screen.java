@@ -19,6 +19,8 @@ public class Screen extends JFrame implements Runnable {
     private Character character;
     private GameManager gameManager;
     private Thread gameThread;
+    private KeyboardInput keyboard;
+    private Entity[] entities;
 
     public Screen() {
         this.setSize(sizeX, sizeY);
@@ -26,6 +28,10 @@ public class Screen extends JFrame implements Runnable {
         this.setLayout(new BorderLayout());
         //this.setResizable(false);
         this.setVisible(true);
+        this.keyboard = new KeyboardInput();
+        this.addKeyListener(keyboard);
+        this.entities = Entity.getEntities();
+
     }
 
     public void initializeMainMenu() {
@@ -46,14 +52,14 @@ public class Screen extends JFrame implements Runnable {
 
         Panel sidePanelWest = new Panel();
         sidePanelWest.setBackground(Color.black);
-        sidePanelWest.setPreferredSize(new Dimension(300, 100));
+        sidePanelWest.setPreferredSize(new Dimension(350, 100));
         sidePanelWest.setLayout(new BorderLayout());
         this.add(sidePanelWest, BorderLayout.WEST);
         this.mainMenuComponent[2] = sidePanelWest;
 
         Panel sidePanelEast = new Panel();
         sidePanelEast.setBackground(Color.black);
-        sidePanelEast.setPreferredSize(new Dimension(300, 100));
+        sidePanelEast.setPreferredSize(new Dimension(350, 100));
         sidePanelEast.setLayout(new BorderLayout());
         this.add(sidePanelEast, BorderLayout.EAST);
         this.mainMenuComponent[3] = sidePanelEast;
@@ -75,10 +81,10 @@ public class Screen extends JFrame implements Runnable {
         gamePanel.setBackground(new Color(0x4F9966));
         gamePanel.setVisible(true);
 
-        this.character = new Character(gamePanel);
-        character.drawCharacter();
+        this.character = new Character(gamePanel, keyboard);
+        character.draw();
 
-        map = new Map(gamePanel, character);
+        this.map = new Map(gamePanel, character, this);
         map.renderMap();
 
         this.add(gamePanel);
@@ -114,7 +120,7 @@ public class Screen extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        this.gameManager = new GameManager(map);
+        this.gameManager = new GameManager(this.map, this.entities);
         gameManager.initialize();
     }
 }
