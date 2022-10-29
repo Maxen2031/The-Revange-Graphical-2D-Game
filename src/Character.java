@@ -29,7 +29,7 @@ public class Character extends Entity{
 
     @Override
     public void draw() {
-        this.getImage().setBounds(this.getX() * 48, this.getY() * 48, 52, 52);
+        this.getImage().setBounds( 14 * Main.TILESIZE, 7 * Main.TILESIZE, 52, 52);
         this.gamePanel.add(this.getImage());
     }
 

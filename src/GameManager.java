@@ -8,8 +8,6 @@ public class GameManager {
     }
 
     public void initialize() {
-        int loops = 0;
-
         while (true) {
             // Update all entities
             System.out.println("run");
@@ -22,15 +20,11 @@ public class GameManager {
             gameMap.renderMap();
 
             try {
-                Thread.sleep(10);
+                Thread.sleep(1000/60);
             }
             catch(InterruptedException ex) {
                 ex.printStackTrace();
             }
-
-            gameMap.disolveMap();
-
-            loops += 1;
         }
     }
 

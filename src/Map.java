@@ -1,7 +1,11 @@
-import javax.swing.*;
-import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Map {
+    public static int worldXTiles = 101;
+    public static int worldYTiles = 101;
     private int[][] map;
     private Screen screen;
 
@@ -20,33 +24,12 @@ public class Map {
     public void renderMap() {
         this.disolveMap();
 
-        System.out.println("Rendermap");
-        int xCoordinate = 0;
-        int yCoordinate = 0;
-        System.out.println("Position");
-        System.out.println(character.getX());
-        System.out.println(character.getY());
+        int tileXMin = this.character.getX() - Map.worldXTiles / 2;
+        int tileXMax = this.character.getX() + Map.worldXTiles / 2;
+        int tileYMin = this.character.getY() - Map.worldYTiles / 2;
+        int tileYMax = this.character.getY() + Map.worldYTiles / 2;
 
-        int minX = (character.getX() - 10);
-        int maxX = (character.getX() + 10);
-        int minY = (character.getY() - 7);
-        int maxY = (character.getY() + 6);
 
-        for (int rowIndex = minY; rowIndex <= maxY; rowIndex++) {
-            int[] row = map[rowIndex];
-            xCoordinate = 0;
-
-            for (int tileIndex = minX; tileIndex <= maxX; tileIndex++) {
-                System.out.println("REnder");
-                int tileId = row[tileIndex];
-                Tile tile = new Tile(tileId);
-                tile.getImage().setBounds(xCoordinate, yCoordinate, 48, 48);
-                this.mapPanel.add(tile.getImage());
-                xCoordinate += 48;
-            }
-
-            yCoordinate += 48;
-        }
 
         this.mapPanel.revalidate();
         this.mapPanel.repaint();
@@ -63,27 +46,41 @@ public class Map {
     }
 
     public void setMap() {
-        this.map = new int[][]{
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-                {2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2},
-        };
+        int totalRow = 11;
+        int totalColumn = 21;
+        char[][] charArray = new char[totalRow][totalColumn];
+        File file = new File("Resources/Map/Map001.txt");
+
+        Scanner scanner = null;
+
+        try {
+            scanner = new Scanner(file);
+        }
+        catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+
+        for (int row = 0; scanner.hasNextLine() && row < totalRow; row++) {
+            char[] chars = scanner.nextLine().toCharArray();
+            for (int i = 0; i < totalColumn && i < chars.length; i++) {
+                charArray[row][i] = chars[i];
+            }
+        }
+
+        this.map = parseToIntArray(charArray);
+    }
+
+    public int[][] parseToIntArray(char[][] charArray) {
+        int[][] intArray = new int[charArray.length][charArray[0].length];
+
+        for (int rowIndex = 0; rowIndex < charArray.length; rowIndex++) {
+            int[] intRow = new int[charArray[0].length];
+
+        }
+
+        System.out.println(Arrays.deepToString(intArray));
+
+        return intArray;
     }
 }
