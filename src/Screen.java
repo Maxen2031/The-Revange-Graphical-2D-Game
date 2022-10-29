@@ -6,8 +6,8 @@ import java.awt.*;
 import java.awt.Dimension;
 
 public class Screen extends JFrame implements Runnable {
-    public static int sizeX = Map.worldXTiles * Tile.tileSize;
-    public static int sizeY = Map.worldXTiles * Tile.tileSize;
+    public static int sizeX = Map.cameraXTiles * Tile.tileSize;
+    public static int sizeY = Map.cameraYTiles * Tile.tileSize;
 
     private Panel mainMenuPanel;
     private Map map;
@@ -48,14 +48,14 @@ public class Screen extends JFrame implements Runnable {
 
         Panel sidePanelWest = new Panel();
         sidePanelWest.setBackground(Color.black);
-        sidePanelWest.setPreferredSize(new Dimension(350, 100));
+        sidePanelWest.setPreferredSize(new Dimension(250, 100));
         sidePanelWest.setLayout(new BorderLayout());
         this.add(sidePanelWest, BorderLayout.WEST);
         this.mainMenuComponent[2] = sidePanelWest;
 
         Panel sidePanelEast = new Panel();
         sidePanelEast.setBackground(Color.black);
-        sidePanelEast.setPreferredSize(new Dimension(350, 100));
+        sidePanelEast.setPreferredSize(new Dimension(250, 100));
         sidePanelEast.setLayout(new BorderLayout());
         this.add(sidePanelEast, BorderLayout.EAST);
         this.mainMenuComponent[3] = sidePanelEast;
@@ -81,7 +81,7 @@ public class Screen extends JFrame implements Runnable {
         character.draw();
 
         this.map = new Map(gamePanel, character, this);
-        map.renderMap();
+        this.map.createMap();
 
         this.add(gamePanel);
     }

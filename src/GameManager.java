@@ -28,8 +28,6 @@ public class GameManager {
                 ex.printStackTrace();
             }
 
-            gameMap.disolveMap();
-
             loops += 1;
         }
     }

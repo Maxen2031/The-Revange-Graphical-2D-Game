@@ -4,10 +4,18 @@ public class Character extends Entity{
     private JLabel image;
     private Panel gamePanel;
     private KeyboardInput keyboard;
+    private int lastX;
+    private int lastY;
+    private int speed;
 
     public Character(Panel gamePanel, KeyboardInput keyboard) {
         this.setX(10 * Tile.tileSize);
         this.setY(7 * Tile.tileSize);
+
+        this.lastX = this.getX();
+        this.lastY = this.getY();
+        this.speed = 3;
+
         this.image = new JLabel(this.generateImage());
         this.gamePanel = gamePanel;
         this.keyboard = keyboard;
@@ -27,6 +35,14 @@ public class Character extends Entity{
         return this.image;
     }
 
+    public int getXMovement() {
+        return this.getX() - this.lastX;
+    }
+
+    public int getYMovement() {
+        return this.getY() - this.lastY;
+    }
+
     @Override
     public void draw() {
         this.getImage().setBounds( 14 * Main.TILESIZE, 7 * Main.TILESIZE, 52, 52);
@@ -35,21 +51,23 @@ public class Character extends Entity{
 
     @Override
     public void update() {
-        System.out.println("update");
+        this.lastX = this.getX();
+        this.lastY = this.getY();
+
         if (keyboard.upPressed == true) {
-            this.setY(this.getY() + 1);
+            this.setY(this.getY() + this.speed);
         }
 
         else if (keyboard.downPressed == true) {
-            this.setY(this.getY() - 1);
+            this.setY(this.getY() - this.speed);
         }
 
         else if (keyboard.rightPressed == true) {
-            this.setX(this.getX() + 1);
+            this.setX(this.getX() + this.speed);
         }
 
         else if (keyboard.leftPressed == true) {
-            this.setX(this.getX() - 1);
+            this.setX(this.getX() - this.speed);
         }
     }
 }

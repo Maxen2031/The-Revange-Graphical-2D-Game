@@ -44,7 +44,7 @@ public class Entity extends JPanel{
     public int getAmountOfEntities() {
         int amount = 0;
 
-        for (Entity entity : this.entities) {
+        for (Entity entity : entities) {
             if (entity == null) continue;
 
             amount++;
@@ -55,5 +55,13 @@ public class Entity extends JPanel{
 
     public static Entity[] getEntities() {
         return entities;
+    }
+
+    public static void drawAllEntities() {
+        for (Entity entity : entities) {
+            if (entity == null) continue;
+
+            entity.draw();
+        }
     }
 }
