@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class Map {
     public static int worldXSize = 44 * 6;
-    public static int worldYSize = 11 * 6;
-    public static int worldXTiles = 102;
-    public static int worldYTiles = 66;
-    public static int cameraXTiles = 17;
-    public static int cameraYTiles = 13;
+    public static int worldYSize = 15 * 6;
+    public static int worldXTiles = 42;
+    public static int worldYTiles = 30;
+    public static int cameraXTiles = 21;
+    public static int cameraYTiles = 15;
     private JLabel[] mapComponents = new JLabel[100000];
 
     public static String[] mapFiles = {
@@ -38,6 +38,8 @@ public class Map {
         int currentY = 0;
         int counter = 0;
 
+        Entity.drawAllEntities();
+
         for (int rowIndex = 0; rowIndex < this.map.length; rowIndex++) {
             currentX = 0;
             System.out.println(currentY);
@@ -56,8 +58,6 @@ public class Map {
 
             currentY += Tile.tileSize;
         }
-
-        Entity.drawAllEntities();
     }
 
     public HashMap getBoundaries() {
@@ -120,18 +120,19 @@ public class Map {
     }
 
     private int[][] readFile() throws FileNotFoundException {
-        int[][] map = new int[worldYSize][worldXSize];
+        int[][] map = new int[worldYTiles][worldXTiles];
 
         Scanner scanner = new Scanner(getMapFile(0));
-
-        for (int i = 0; i < 11;  i++) {
+        int val = 0;
+        for (int i = 0; i < worldYTiles;  i++) {
             String[] line = scanner.nextLine().trim().split("," + " ");
 
             for (int j = 0; j < line.length; j++) {
+                val++;
                 map[i][j] = Integer.parseInt(line[j]);
             }
         }
-
+        System.out.println(val);
         System.out.println(Arrays.toString(map));
 
         return map;
