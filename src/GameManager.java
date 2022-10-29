@@ -22,7 +22,7 @@ public class GameManager {
             gameMap.renderMap();
 
             try {
-                Thread.sleep(10);
+                Thread.sleep(1000/30);
             }
             catch(InterruptedException ex) {
                 ex.printStackTrace();
