@@ -1,14 +1,19 @@
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Map {
-    public static int worldXTiles = 101;
-    public static int worldYTiles = 101;
+    public static int worldXTiles = 102;
+    public static int worldYTiles = 66;
+    public static String[] mapFiles = {
+            "Resources/Map/Map001.txt"
+    };
+
+
     private int[][] map;
     private Screen screen;
-
     private Panel mapPanel;
     private Character character;
     private Entity[] entities;
@@ -28,8 +33,10 @@ public class Map {
         int tileXMax = this.character.getX() + Map.worldXTiles / 2;
         int tileYMin = this.character.getY() - Map.worldYTiles / 2;
         int tileYMax = this.character.getY() + Map.worldYTiles / 2;
-
-
+        System.out.println(tileXMin);
+        System.out.println(tileXMax);
+        System.out.println(tileYMin);
+        System.out.println(tileYMax);
 
         this.mapPanel.revalidate();
         this.mapPanel.repaint();
@@ -46,41 +53,33 @@ public class Map {
     }
 
     public void setMap() {
-        int totalRow = 11;
-        int totalColumn = 21;
-        char[][] charArray = new char[totalRow][totalColumn];
-        File file = new File("Resources/Map/Map001.txt");
-
-        Scanner scanner = null;
-
         try {
-            scanner = new Scanner(file);
+            this.readFile();
         }
-        catch (FileNotFoundException ex) {
+        catch(FileNotFoundException ex) {
             ex.printStackTrace();
         }
+    }
 
+    private void readFile() throws FileNotFoundException {
+        int[][] map = new int[worldYTiles][worldXTiles];
 
-        for (int row = 0; scanner.hasNextLine() && row < totalRow; row++) {
-            char[] chars = scanner.nextLine().toCharArray();
-            for (int i = 0; i < totalColumn && i < chars.length; i++) {
-                charArray[row][i] = chars[i];
+        Scanner scanner = new Scanner(getMapFile(0));
+
+        for (int i = 0; i < map.length;  i++) {
+            String[] line = scanner.nextLine().trim().split("," + " ");
+            for (int j = 0; j < line.length; j++) {
+                map[i][j] = Integer.parseInt(line[j]);
             }
         }
 
-        this.map = parseToIntArray(charArray);
+        System.out.println(Arrays.deepToString(map));
     }
 
-    public int[][] parseToIntArray(char[][] charArray) {
-        int[][] intArray = new int[charArray.length][charArray[0].length];
+    private File getMapFile(int index)  {
+        String filePath = mapFiles[index];
+        File file = new File(filePath);
 
-        for (int rowIndex = 0; rowIndex < charArray.length; rowIndex++) {
-            int[] intRow = new int[charArray[0].length];
-
-        }
-
-        System.out.println(Arrays.deepToString(intArray));
-
-        return intArray;
+        return file;
     }
 }

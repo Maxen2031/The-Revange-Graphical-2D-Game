@@ -1,17 +1,13 @@
 
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Screen extends JFrame implements Runnable {
-    public static int sizeX = 1018;
-    public static int sizeY = 720;
-    public static int titleSize = 1200;
+    public static int sizeX = Map.worldXTiles * Tile.tileSize;
+    public static int sizeY = Map.worldXTiles * Tile.tileSize;
 
     private Panel mainMenuPanel;
     private Map map;

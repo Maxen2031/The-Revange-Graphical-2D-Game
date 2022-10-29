@@ -6,8 +6,8 @@ public class Character extends Entity{
     private KeyboardInput keyboard;
 
     public Character(Panel gamePanel, KeyboardInput keyboard) {
-        this.setX(10);
-        this.setY(7);
+        this.setX(10 * Tile.tileSize);
+        this.setY(7 * Tile.tileSize);
         this.image = new JLabel(this.generateImage());
         this.gamePanel = gamePanel;
         this.keyboard = keyboard;
