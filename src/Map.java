@@ -15,7 +15,15 @@ public class Map {
     private JLabel[] mapComponents = new JLabel[100000];
 
     public static String[] mapFiles = {
-            "Resources/Map/Map001.txt"
+            "Resources/Map/Map001.txt",
+            "Resources/Map/Map002.txt",
+            "Resources/Map/Map003.txt",
+            "Resources/Map/Map004.txt",
+    };
+
+    public static int[][] mapComposition = {
+            {1, 2},
+            {3, 4},
     };
 
 
@@ -76,6 +84,62 @@ public class Map {
         return boundaries;
     }
 
+    private int readMapRowLength() {
+        int rowLength = 0;
+
+        try {
+            for (String filePath : mapFiles) {
+                File file = new File(filePath);
+
+                rowLength += this.readRowLengthFromTxtFile(file);
+            }
+        }
+
+        catch(FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return rowLength;
+    }
+
+    private int readMapColLength() {
+        int colLength = 0;
+
+        try {
+            for (String filePath : mapFiles) {
+                File file = new File(filePath);
+
+                colLength += this.readColLengthFromTxtFile(file);
+            }
+        }
+
+        catch(FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return colLength;
+    }
+
+    private int readRowLengthFromTxtFile (File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+
+        int lines = 0;
+
+        while (scanner.hasNextLine() && scanner.nextLine() != null) {
+            System.out.println("Run");
+            lines++;
+        }
+
+        return lines;
+    }
+
+    private int readColLengthFromTxtFile(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        String[] line = scanner.nextLine().trim().split(", ");
+
+        return line.length;
+    }
+
     public void renderMap() {
         HashMap boundaries = this.getBoundaries();
         /*
@@ -120,11 +184,15 @@ public class Map {
     }
 
     private int[][] readFile() throws FileNotFoundException {
-        int[][] map = new int[worldYTiles][worldXTiles];
+        int rowLength = this.readMapRowLength();
+        int colLength = this.readMapColLength();
 
-        Scanner scanner = new Scanner(getMapFile(0));
+        int[][] map = new int[rowLength][colLength];
+
+        Scanner scanner = new Scanner(this.getMapFile(0));
+
         int val = 0;
-        for (int i = 0; i < worldYTiles;  i++) {
+        for (int i = 0; i < rowLength;  i++) {
             String[] line = scanner.nextLine().trim().split("," + " ");
 
             for (int j = 0; j < line.length; j++) {
