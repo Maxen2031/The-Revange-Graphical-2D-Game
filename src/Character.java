@@ -21,7 +21,7 @@ public class Character extends Entity{
 
         this.lastX = this.getX();
         this.lastY = this.getY();
-        this.speed = 3;
+        this.speed = 10;
 
         this.image = new JLabel(upImages[0]);
         this.gamePanel = gamePanel;

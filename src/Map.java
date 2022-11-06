@@ -22,8 +22,8 @@ public class Map {
     };
 
     public static int[][] mapComposition = {
-            {1, 2},
-            {3, 4},
+            {0, 1},
+            {2, 3},
     };
 
 
@@ -50,9 +50,8 @@ public class Map {
 
         for (int rowIndex = 0; rowIndex < this.map.length; rowIndex++) {
             currentX = 0;
-            System.out.println(currentY);
             int[] row = this.map[rowIndex];
-
+            System.out.println(rowIndex);
             for (int cellIndex = 0; cellIndex < row.length; cellIndex++) {
                 int cell = row[cellIndex];
                 //System.out.println(cell);
@@ -88,7 +87,11 @@ public class Map {
         int rowLength = 0;
 
         try {
-            for (String filePath : mapFiles) {
+            for (int rowIndex = 0; rowIndex < mapComposition.length; rowIndex++) {
+                int[] row = mapComposition[rowIndex];
+
+                String filePath = mapFiles[row[0]];
+
                 File file = new File(filePath);
 
                 rowLength += this.readRowLengthFromTxtFile(file);
@@ -106,7 +109,11 @@ public class Map {
         int colLength = 0;
 
         try {
-            for (String filePath : mapFiles) {
+            int[] row = mapComposition[0];
+
+            for (int cellIndex = 0; cellIndex < row.length; cellIndex++) {
+                String filePath = mapFiles[row[cellIndex]];
+
                 File file = new File(filePath);
 
                 colLength += this.readColLengthFromTxtFile(file);
@@ -151,9 +158,6 @@ public class Map {
         int xChange = this.character.getXMovement();
         int yChange = this.character.getYMovement();
 
-        System.out.println(xChange);
-        System.out.println(yChange);
-
         for (JLabel mapComponent : mapComponents) {
             if (mapComponent == null) continue;
 
@@ -189,19 +193,36 @@ public class Map {
 
         int[][] map = new int[rowLength][colLength];
 
-        Scanner scanner = new Scanner(this.getMapFile(0));
+        System.out.println(map.length);
+        System.out.println(map[1].length);
 
-        int val = 0;
-        for (int i = 0; i < rowLength;  i++) {
-            String[] line = scanner.nextLine().trim().split("," + " ");
+        for (int rowIndex = 0; rowIndex < mapComposition.length; rowIndex++) {
+            int[] row = mapComposition[rowIndex];
 
-            for (int j = 0; j < line.length; j++) {
-                val++;
-                map[i][j] = Integer.parseInt(line[j]);
+            for (int cellIndex = 0; cellIndex < row.length; cellIndex++) {
+                int toAddRow = rowIndex * 15;
+                int toAddCol = cellIndex * 21;
+                int cell = row[cellIndex];
+
+                File mapFile = this.getMapFile(cell);
+                Scanner scanner = new Scanner(mapFile);
+
+                int val = 0;
+                int individualRowLength = this.readRowLengthFromTxtFile(new File(mapFiles[0]));
+
+                for (int i = 0; i < individualRowLength;  i++) {
+                    String[] line = scanner.nextLine().trim().split("," + " ");
+
+                    for (int j = 0; j < line.length; j++) {
+                        val++;
+                        map[i + toAddRow][j + toAddCol] = Integer.parseInt(line[j]);
+                    }
+                }
             }
         }
-        System.out.println(val);
-        System.out.println(Arrays.toString(map));
+
+        System.out.println("MAPLENGTH: " + map.length);
+        System.out.println("MAPLENGTH: " + map[0].length);
 
         return map;
     }
