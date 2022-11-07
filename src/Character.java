@@ -24,13 +24,15 @@ public class Character extends Entity{
         this.speed = 10;
 
         this.image = new JLabel(upImages[0]);
+        this.setImage(upImages[0]);
         this.gamePanel = gamePanel;
         this.keyboard = keyboard;
     }
 
     public Character(int x, int y, Panel gamePanel) {
         super(x, y);
-        this.image = new JLabel(upImages[0]);
+        this.image = new JLabel();
+        this.setImage(upImages[0]);
         this.gamePanel = gamePanel;
     }
 
