@@ -12,7 +12,6 @@ public class GameManager {
 
         while (true) {
             // Update all entities
-            System.out.println("run");
 
             for (Entity entity : entities) {
                 if (entity == null) continue;

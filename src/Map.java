@@ -12,7 +12,7 @@ public class Map {
     public static int worldYTiles = 30;
     public static int cameraXTiles = 21;
     public static int cameraYTiles = 15;
-    private JLabel[] mapComponents = new JLabel[100000];
+    private Tile[] mapComponents = new Tile[100000];
 
     public static String[] mapFiles = {
             "Resources/Map/Map001.txt",
@@ -22,8 +22,8 @@ public class Map {
     };
 
     public static int[][] mapComposition = {
-            {0, 1},
-            {2, 3},
+            {0},
+            //{2, 3},
     };
 
 
@@ -39,6 +39,8 @@ public class Map {
         this.character = character;
         this.screen = screen;
         this.entities = Entity.getEntities();
+
+        this.character.injectMapComponents(mapComponents);
     }
 
     public void createMap() {
@@ -55,10 +57,10 @@ public class Map {
             for (int cellIndex = 0; cellIndex < row.length; cellIndex++) {
                 int cell = row[cellIndex];
                 //System.out.println(cell);
-                Tile chunk = new Tile(cell);
-                chunk.getImage().setBounds(currentX, currentY, Tile.tileSize, Tile.tileSize);
-                this.mapPanel.add(chunk.getImage());
-                mapComponents[counter] = chunk.getImage();
+                Tile tile = new Tile(cell);
+                tile.getImage().setBounds(currentX, currentY, Tile.tileSize, Tile.tileSize);
+                this.mapPanel.add(tile.getImage());
+                mapComponents[counter] = tile;
                 currentX += Tile.tileSize;
                 counter++;
             }
@@ -133,7 +135,6 @@ public class Map {
         int lines = 0;
 
         while (scanner.hasNextLine() && scanner.nextLine() != null) {
-            System.out.println("Run");
             lines++;
         }
 
@@ -158,10 +159,12 @@ public class Map {
         int xChange = this.character.getXMovement();
         int yChange = this.character.getYMovement();
 
-        for (JLabel mapComponent : mapComponents) {
+        for (Tile mapComponent : mapComponents) {
             if (mapComponent == null) continue;
 
-            mapComponent.setBounds(mapComponent.getBounds().x - xChange, mapComponent.getBounds().y + yChange, 48, 48);
+            JLabel image = mapComponent.getImage();
+
+            image.setBounds(image.getBounds().x - xChange, image.getBounds().y + yChange, 48, 48);
         }
 
        // this.mapPanel.revalidate();
