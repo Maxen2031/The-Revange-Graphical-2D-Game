@@ -85,21 +85,21 @@ public class Character extends Entity{
         }
 
         else if (keyboard.downPressed == true) {
-            //if (this.isCollidingYDown() == true) return;
+            if (this.isCollidingYDown() == true) return;
 
             this.setY(this.getY() - this.speed);
             this.setImage(downImages[this.imageIndex]);
         }
 
         else if (keyboard.rightPressed == true) {
-            //if (this.isCollidingXRight() == true) return;
+            if (this.isCollidingXRight() == true) return;
 
             this.setX(this.getX() + this.speed);
             this.setImage(rightImages[this.imageIndex]);
         }
 
         else if (keyboard.leftPressed == true) {
-            //if (this.isCollidingXLeft() == true) return;
+            if (this.isCollidingXLeft() == true) return;
 
             this.setX(this.getX() - this.speed);
             this.setImage(leftImages[this.imageIndex]);
@@ -145,13 +145,13 @@ public class Character extends Entity{
 
             int xCharacterLeft = this.getImage().getBounds().x - Main.TILESIZE/2;
             int xCharacterRight = this.getImage().getBounds().x + Main.TILESIZE/2;
-            int yCharacterUp = this.getImage().getBounds().y + Main.TILESIZE/2;
-            int yCharacterDown = this.getImage().getBounds().y - Main.TILESIZE/2;
+            int yCharacterUp = this.getImage().getBounds().y - Main.TILESIZE/2;
+            int yCharacterDown = this.getImage().getBounds().y + Main.TILESIZE/2;
 
             int xTileLeft = tile.getImage().getBounds().x - Main.TILESIZE/2;
             int xTileRight = tile.getImage().getBounds().x + Main.TILESIZE/2;
-            int yTileUp = tile.getImage().getBounds().y + Main.TILESIZE/2;
-            int yTileDown = tile.getImage().getBounds().y - Main.TILESIZE/2;
+            int yTileUp = tile.getImage().getBounds().y - Main.TILESIZE/2;
+            int yTileDown = tile.getImage().getBounds().y + (Main.TILESIZE/2);
 
             boolean charRight = xTileLeft - xCharacterRight >= 0 && xTileLeft - xCharacterRight <= Tile.COLLISSION_MARGIN;
             boolean charLeft = xCharacterLeft - xTileRight >= 0 && xCharacterLeft - xTileRight <= Tile.COLLISSION_MARGIN;
@@ -175,6 +175,7 @@ public class Character extends Entity{
             }
 
             if (charUp && xWithinBounds) {
+                System.out.println("HERE: " + (yCharacterUp - yTileDown));
                 map.put("YUp", true);
                 break;
             }
