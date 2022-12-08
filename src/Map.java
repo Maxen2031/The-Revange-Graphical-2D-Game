@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -56,7 +58,7 @@ public class Map {
             System.out.println(rowIndex);
             for (int cellIndex = 0; cellIndex < row.length; cellIndex++) {
                 int cell = row[cellIndex];
-                //System.out.println(cell);
+
                 Tile tile = new Tile(cell);
                 tile.getImage().setBounds(currentX, currentY, Tile.tileSize, Tile.tileSize);
                 this.mapPanel.add(tile.getImage());
@@ -67,6 +69,17 @@ public class Map {
 
             currentY += Tile.tileSize;
         }
+
+        JPanel panel = new JPanel();
+        panel.setBounds(20, 20, 100, 100);
+        panel.setVisible(true);
+        this.mapPanel.add(panel);
+
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+
+        panel.setBorder(border);
+
+        System.out.println();
     }
 
     public HashMap getBoundaries() {

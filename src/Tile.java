@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 
 public class Tile {
     public static int COLLISSION_MARGIN = 10;
@@ -22,8 +24,18 @@ public class Tile {
 
     public Tile(int id) {
         String path = this.generateImage(id);
-        this.image = new JLabel(new ImageIcon(path));
+        this.image = this.createImageForTile(path);
         this.canCollide = getCollidable(path);
+    }
+
+    private JLabel createImageForTile(String path) {
+        JLabel jlabel = new JLabel(new ImageIcon(path));
+
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+
+        jlabel.setBorder(border);
+
+        return jlabel;
     }
 
     private String generateImage(int id) {
