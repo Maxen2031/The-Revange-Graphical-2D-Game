@@ -21,7 +21,7 @@ public class GameManager {
             gameMap.renderMap();
 
             try {
-                Thread.sleep(1000/30);
+                Thread.sleep(1000/60);
             }
             catch(InterruptedException ex) {
                 ex.printStackTrace();
